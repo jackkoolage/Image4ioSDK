@@ -38,27 +38,29 @@
 
 # Code simple:
 ```vb
-''set proxy and connection options
-Dim con As New Image4ioSDK.ConnectionSettings With {.CloseConnection = True, .TimeOut = TimeSpan.FromMinutes(30), .Proxy = New Image4ioSDK.ProxyConfig With {.SetProxy = True, .ProxyIP = "127.0.0.1", .ProxyPort = 8888, .ProxyUsername = "user", .ProxyPassword = "pass"}}
-''set api client
-Dim CLNT As Image4ioSDK.IClient = New Image4ioSDK.OClient("cloudname", "apikey", "secretkey", con)
+Dim Clint As Image4ioSDK.IClient = New Image4ioSDK.OClient("cloud_name", "api_key", "api_secret", New Image4ioSDK.ConnectionSettings With {.CloseConnection = True, .TimeOut = TimeSpan.FromMinutes(80), .Proxy = New Image4ioSDK.ProxyConfig With {.SetProxy = True, .ProxyIP = "127.0.0.1", .ProxyPort = 80, .ProxyUsername = "user", .ProxyPassword = "123456"}})
 
-''general
-CLNT.FolderCreate("folder name", "folder path")
-CLNT.FolderDelete("folder path")
-CLNT.FolderList("folder path")
-CLNT.ImageCopy("image path", "folder path")
-CLNT.ImageDelete("image path")
-CLNT.ImageMetadata("image path")
-CLNT.ImageMove("image path", "folder path")
-Dim cts As New Threading.CancellationTokenSource()
-Dim _ReportCls As New Progress(Of Image4ioSDK.ReportStatus)(Sub(ReportClass As Image4ioSDK.ReportStatus) Console.WriteLine(String.Format("{0} - {1}% - {2}", String.Format("{0}/{1}", (ReportClass.BytesTransferred), (ReportClass.TotalBytes)), CInt(ReportClass.ProgressPercentage), ReportClass.TextStatus)))
-CLNT.Upload("c:\\VIDO.jpg", Image4ioSDK.utilitiez.UploadTypes.FilePath, "", "VIDO.jpg", True, True, _ReportCls, cts.Token)
-CLNT.UploadMultiable(New List(Of Image4ioSDK.OClient.MultiableUpload) From {New Image4ioSDK.OClient.MultiableUpload With {.FileToUpload = "c:\\VIDO.jpg", .FileName = "VIDO.jpg"}}, Image4ioSDK.utilitiez.UploadTypes.FilePath, "", True, False, _ReportCls, cts.Token)
-CLNT.UploadRemotely("https://domain.com/watch.png", "")
+Await Clint.FolderCreate("folder_name", "folder_path")
+Await Clint.FolderDelete("folder_name")
+Await Clint.FolderList("folder_path")
+Await Clint.ImageCopy("image_path", "folder_path")
+Await Clint.ImageDelete("image_path")
+Await Clint.ImageMetadata("image_path")
+Await Clint.ImageMove("image_path", "folder_path")
 
-''Transformation
-CLNT.Transformation(New Image4ioSDK.JSON.JSON_ImageMetadata).Compress(75)
-CLNT.Transformation(New Image4ioSDK.JSON.JSON_ImageMetadata).Resize(75, 1024, 768)
-CLNT.Transformation(New Image4ioSDK.JSON.JSON_ImageMetadata).ToWebP(75, 1024, 768)
+Dim CancelToken As New Threading.CancellationTokenSource()
+Dim _ReportCls As New Progress(Of Image4ioSDK.ReportStatus)(Sub(r) Console.WriteLine($"{r.BytesTransferred}/{r.TotalBytes}" + r.ProgressPercentage + If(r.TextStatus, "Downloading...")))
+Await Clint.Upload("C:\Down\mypic.jpg", Image4ioSDK.Utilitiez.UploadTypes.FilePath, "folder_path", "mypic.jpg", True, False, _ReportCls, CancelToken.Token)
+Dim multiFiles = New List(Of Image4ioSDK.OClient.MultiableUpload)
+multiFiles.Add(New Image4ioSDK.OClient.MultiableUpload With {.FileToUpload = "C:\Down\mypic1.jpg", .FileName = "mypic1.jpg"})
+multiFiles.Add(New Image4ioSDK.OClient.MultiableUpload With {.FileToUpload = "C:\Down\mypic2.jpg", .FileName = "mypic2.jpg"})
+Await Clint.UploadMultiable(multiFiles, Image4ioSDK.Utilitiez.UploadTypes.FilePath, "folder_path", True, False, _ReportCls, CancelToken.Token)
+Await Clint.UploadRemotely("https://domain.com/mypic.jpg", "folder_path")
+Await Clint.Download("image_path", "C:\Down", "mypic.jpg", _ReportCls, CancelToken.Token)
+
+'' Transformation
+Dim meta = Await Clint.ImageMetadata("tzt/40d78f11-2b11-4169-aa73-b953573666cd.jpg")
+Clint.Transformation(meta).Compress(75)
+Clint.Transformation(meta).Resize(75, 800, 600)
+Clint.Transformation(meta).ToWebP(75, 800, 600)
 ```

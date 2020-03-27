@@ -17,21 +17,21 @@
 
 # List of functions:
 **Management**
-1. ImageMetadata
-1. ImageCopy
-1. ImageMove
-1. ImageDelete
-1. FolderDelete
-1. FolderCreate
-1. FolderList
-1. Upload
-1. UploadMultiable
-1. UploadRemotely
+> * ImageMetadata
+> * ImageCopy
+> * ImageMove
+> * ImageDelete
+> * FolderDelete
+> * FolderCreate
+> * FolderList
+> * Upload
+> * UploadMultiable
+> * UploadRemotely
 
 **Transformation**
-1. ToWebP
-1. Resize
-1. Compress
+> * ToWebP
+> * Resize
+> * Compress
 
 # CodeMap:
 ![codemap](https://i.postimg.cc/FK1nJndz/io-codemap.png)

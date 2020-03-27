@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Image4ioSDK is a .Net library for Image4.io file hosting service.</Description>
+    <Copyright>Copyright © 2019 DeQmaTech LLC.</Copyright>
+    <AssemblyTitle>Image4ioSDK</AssemblyTitle>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <Title>Image4ioSDK</Title>
+    <Authors>DeQmaTech LLC.</Authors>
+    <AssemblyName>Image4ioSDK</AssemblyName>
+    <PackageProjectUrl>https://github.com/jackkoolage/Image4ioSDK</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/jackkoolage/Image4ioSDK/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>Image4io;netstandard;cloud-storage</PackageTags>
+    <RepositoryUrl>https://github.com/jackkoolage/Image4ioSDK</RepositoryUrl>
+    <PackageIcon>icon_64x64.png</PackageIcon>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <RootNamespace>Image4ioSDK</RootNamespace>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.1;net452</TargetFrameworks>
+    <PackageId>DeQmaTech.Image4ioSDK</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Product>Image4ioSDK</Product>
+    <Version>1.1.0</Version>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+<ItemGroup>
+  <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.3" />
+  <!--<PackageReference Include="System.Net.Http" Version="4.3.3" />-->
+</ItemGroup>
+
+</Project>
